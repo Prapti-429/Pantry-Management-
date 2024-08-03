@@ -1,0 +1,50 @@
+// components/AddItemForm.js
+import { useState } from 'react';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { TextField, Button, Box } from '@mui/material';
+
+const AddItemForm = () => {
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await addDoc(collection(db, 'items'), {
+        name,
+        quantity: parseInt(quantity),
+      });
+      setName('');
+      setQuantity('');
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  };
+
+  return (
+    <Box component="form" onSubmit={handleSubmit}>
+      <TextField
+        label="Item Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        fullWidth
+        margin="normal"
+      />
+      <TextField
+        label="Quantity"
+        type="number"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+        fullWidth
+        margin="normal"
+      />
+      <Button type="submit" variant="contained" color="primary">
+        Add Item
+      </Button>
+    </Box>
+  );
+};
+
+export default AddItemForm;
