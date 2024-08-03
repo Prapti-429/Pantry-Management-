@@ -1,0 +1,17 @@
+// components/Layout.js
+import { Container, AppBar, Toolbar, Typography } from '@mui/material';
+
+const Layout = ({ children }) => {
+  return (
+    <Container>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6">Pantry Management</Typography>
+        </Toolbar>
+      </AppBar>
+      {children}
+    </Container>
+  );
+};
+
+export default Layout;
